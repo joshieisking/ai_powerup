@@ -1,0 +1,3854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Power-Up Protocol - Complete Training</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap');
+        
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 30%, #2d1b69 70%, #0f1419 100%);
+            color: white;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.3;
+            animation: pulse 4s ease-in-out infinite;
+            z-index: 1;
+        }
+        
+        .grid-bg.combat {
+            background-image: 
+                linear-gradient(rgba(255, 0, 0, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: combatPulse 2s ease-in-out infinite;
+        }
+        
+        .grid-bg.secret {
+            background-image: 
+                linear-gradient(rgba(255, 215, 0, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 215, 0, 0.1) 1px, transparent 1px);
+            animation: secretPulse 3s ease-in-out infinite;
+        }
+        
+        .grid-bg.education {
+            background-image: 
+                linear-gradient(rgba(0, 150, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 150, 255, 0.1) 1px, transparent 1px);
+            animation: learnPulse 5s ease-in-out infinite;
+        }
+        
+        .grid-bg.intelligence {
+            background-image: 
+                linear-gradient(rgba(0, 255, 0, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 0, 0.1) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: scanPulse 4s ease-in-out infinite;
+        }
+        
+        .grid-bg.victory {
+            background-image: 
+                linear-gradient(rgba(255, 215, 0, 0.15) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 215, 0, 0.15) 1px, transparent 1px);
+            background-size: 60px 60px;
+            opacity: 0.4;
+            animation: victoryPulse 3s ease-in-out infinite;
+        }
+        
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.5; }
+        }
+        
+        @keyframes combatPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.5; }
+        }
+        
+        @keyframes secretPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+        
+        @keyframes learnPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.5; }
+        }
+        
+        @keyframes scanPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.5; }
+        }
+        
+        @keyframes victoryPulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.7; }
+        }
+        
+        @keyframes glow {
+            0%, 100% { 
+                text-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff;
+                transform: scale(1);
+            }
+            50% { 
+                text-shadow: 0 0 30px #ff00ff, 0 0 60px #ff00ff;
+                transform: scale(1.01);
+            }
+        }
+        
+        @keyframes secretGlow {
+            0%, 100% { 
+                text-shadow: 0 0 20px #ffd700, 0 0 40px #ffd700;
+                transform: scale(1);
+            }
+            50% { 
+                text-shadow: 0 0 30px #ff6b35, 0 0 60px #ff6b35;
+                transform: scale(1.01);
+            }
+        }
+        
+        @keyframes combatGlow {
+            0%, 100% { 
+                text-shadow: 0 0 20px #ff0000, 0 0 40px #ff0000;
+                transform: scale(1);
+            }
+            50% { 
+                text-shadow: 0 0 30px #ff6b35, 0 0 60px #ff6b35;
+                transform: scale(1.01);
+            }
+        }
+        
+        @keyframes eduGlow {
+            0%, 100% { 
+                text-shadow: 0 0 20px #0096ff, 0 0 40px #0096ff;
+                transform: scale(1);
+            }
+            50% { 
+                text-shadow: 0 0 30px #00ffff, 0 0 60px #00ffff;
+                transform: scale(1.01);
+            }
+        }
+        
+        @keyframes intelGlow {
+            0%, 100% { 
+                text-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00;
+                transform: scale(1);
+            }
+            50% { 
+                text-shadow: 0 0 30px #00ffff, 0 0 60px #00ffff;
+                transform: scale(1.01);
+            }
+        }
+        
+        @keyframes victoryGlow {
+            0%, 100% { 
+                text-shadow: 0 0 30px #ffd700, 0 0 60px #ffd700, 0 0 90px #ffd700;
+                transform: scale(1);
+            }
+            50% { 
+                text-shadow: 0 0 40px #00ffff, 0 0 80px #00ffff, 0 0 120px #00ffff;
+                transform: scale(1.03);
+            }
+        }
+        
+        /* FIXED PROGRESS BAR ANIMATIONS */
+        @keyframes progress-fill-92 {
+            0% { width: 0%; }
+            100% { width: 92%; }
+        }
+        
+        @keyframes progress-fill-78 {
+            0% { width: 0%; }
+            100% { width: 78%; }
+        }
+        
+        @keyframes progress-fill-85 {
+            0% { width: 0%; }
+            100% { width: 85%; }
+        }
+        
+        .progress-bar-92 { animation: progress-fill-92 2s ease-out; }
+        .progress-bar-78 { animation: progress-fill-78 2s ease-out 0.5s both; }
+        .progress-bar-85 { animation: progress-fill-85 2s ease-out 1s both; }
+        
+        @keyframes levelUp {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        
+        @keyframes slideIn {
+            0% { transform: translateX(100%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes letterReveal {
+            0% {
+                transform: rotateY(90deg) scale(0.8);
+                opacity: 0;
+            }
+            50% {
+                transform: rotateY(45deg) scale(1.1);
+            }
+            100% {
+                transform: rotateY(0deg) scale(1);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes celebration {
+            0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+        
+        @keyframes slideInUp {
+            0% {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+        
+        /* Level Container */
+        .level-container {
+            display: none;
+            min-height: 100vh;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .level-container.active {
+            display: block;
+            animation: slideInUp 0.5s ease-out;
+        }
+        
+        /* OPTIMIZED Container Styles for Better Viewport Usage */
+        .container {
+            width: 95%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 20px 100px 20px;
+            min-height: calc(100vh - 80px);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* COMPACT Typography for Better Screen Usage */
+        .title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.8rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            line-height: 1.1;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #ffffff;
+            opacity: 0.9;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-align: center;
+            width: 100%;
+        }
+        
+        /* Badge Styles */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 16px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 15px rgba(0, 255, 255, 0.4);
+            justify-self: center;
+            align-self: center;
+        }
+        
+        .badge.primary {
+            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            color: #000000;
+            animation: glow 3s ease-in-out infinite;
+        }
+        
+        .badge.combat {
+            background: linear-gradient(45deg, #ff0000, #ff6b35);
+            color: #ffffff;
+            animation: combatGlow 2s ease-in-out infinite;
+        }
+        
+        .badge.secret {
+            background: linear-gradient(45deg, #ffd700, #ff6b35);
+            color: #000000;
+            animation: secretGlow 2s ease-in-out infinite;
+        }
+        
+        .badge.education {
+            background: linear-gradient(45deg, #0096ff, #00ffff);
+            color: #000000;
+            animation: eduGlow 3s ease-in-out infinite;
+        }
+        
+        .badge.intelligence {
+            background: linear-gradient(45deg, #00ff00, #00ffff);
+            color: #000000;
+            animation: intelGlow 3s ease-in-out infinite;
+        }
+        
+        .badge.victory {
+            background: linear-gradient(45deg, #ffd700, #ff6b35);
+            color: #000000;
+            animation: victoryGlow 3s ease-in-out infinite;
+        }
+        
+        /* Button Styles */
+        .btn {
+            padding: 15px 35px;
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            margin: 15px auto;
+            width: fit-content;
+            min-width: 180px;
+            max-width: 350px;
+        }
+        
+        .btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .btn:active {
+            transform: scale(0.98);
+        }
+        
+        .btn.primary {
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            color: #ffffff;
+            box-shadow: 0 0 30px rgba(255, 107, 53, 0.4);
+        }
+        
+        .btn.primary:hover {
+            box-shadow: 0 0 40px rgba(255, 107, 53, 0.8);
+        }
+        
+        .btn.secondary {
+            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            color: #000000;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+        }
+        
+        .btn.secondary:hover {
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.6);
+        }
+        
+        .btn.secret {
+            background: linear-gradient(45deg, #ffd700, #ff6b35);
+            color: #000000;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+        }
+        
+        .btn.secret:hover {
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.8);
+        }
+        
+        .btn.combat {
+            background: linear-gradient(45deg, #ff0000, #ff6b35);
+            color: #ffffff;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
+        }
+        
+        .btn.combat:hover {
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.8);
+        }
+        
+        .btn.education {
+            background: linear-gradient(45deg, #0096ff, #00ffff);
+            color: #000000;
+            box-shadow: 0 0 30px rgba(0, 150, 255, 0.4);
+        }
+        
+        .btn.education:hover {
+            box-shadow: 0 0 40px rgba(0, 150, 255, 0.8);
+        }
+        
+        /* OPTIMIZED Navigation */
+        .nav-container {
+            position: fixed;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+            padding: 12px 20px;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            min-height: 50px;
+            max-width: 90vw;
+            flex-wrap: wrap;
+        }
+        
+        .nav-button {
+            padding: 10px 20px;
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            color: #000000;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+            white-space: nowrap;
+            font-size: 0.9rem;
+        }
+        
+        .nav-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.6);
+        }
+        
+        .nav-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* OPTIMIZED Cover Page Styles */
+        .cover-container {
+            text-align: center;
+            position: relative;
+            max-width: 1000px;
+            width: 95%;
+            padding: 40px 30px;
+            margin: 0 auto;
+            min-height: calc(100vh - 80px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+            z-index: 10;
+        }
+        
+        .level-indicator {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.5);
+            border: 2px solid #ffffff;
+        }
+        
+        .main-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 4.5rem;
+            font-weight: 900;
+            color: #ffffff;
+            margin-bottom: 15px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            animation: glow 3s ease-in-out infinite;
+            line-height: 1.1;
+            text-shadow: 0 0 10px #000000, 0 0 20px #000000;
+            text-align: center;
+        }
+        
+        .cover-subtitle {
+            font-size: 1.6rem;
+            color: #00ffff;
+            margin-bottom: 40px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 0 0 5px #000000;
+            text-align: center;
+        }
+        
+        /* OPTIMIZED Skills Container for Better Viewport Usage */
+        .skills-container {
+            background: rgba(0, 0, 0, 0.8);
+            border: 4px solid #00ffff;
+            border-radius: 20px;
+            padding: 35px;
+            margin: 30px auto;
+            max-width: 650px;
+            width: 100%;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 0 40px rgba(0, 255, 255, 0.6);
+            animation: levelUp 2s ease-in-out infinite;
+        }
+        
+        .skill-item {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            border-left: 6px solid #ff6b35;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .achievement-badge {
+            width: 60px;
+            height: 60px;
+            background: #ffd700;
+            border: 3px solid #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 25px;
+            font-weight: 900;
+            font-size: 1.8rem;
+            color: #000000;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+            flex-shrink: 0;
+        }
+        
+        .skill-info {
+            flex-grow: 1;
+            text-align: left;
+        }
+        
+        .skill-name {
+            font-weight: 900;
+            font-size: 1.4rem;
+            color: #ffffff;
+            margin-bottom: 12px;
+            text-shadow: 0 0 3px #000000;
+        }
+        
+        .skill-progress {
+            background: rgba(0, 0, 0, 0.7);
+            height: 12px;
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+            border: 2px solid #ffffff;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #00ffff, #ff00ff);
+        }
+        
+        .xp-indicator {
+            font-size: 0.75rem;
+            color: #00ffff;
+            margin-top: 4px;
+        }
+        
+        .bottom-tagline {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.1rem;
+            color: #ffffff;
+            margin-top: 30px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+            text-align: center;
+        }
+        
+        /* OPTIMIZED Game Styles */
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            min-height: calc(100vh - 80px);
+            position: relative;
+            z-index: 10;
+            padding: 10px;
+        }
+        
+        .game-header {
+            text-align: center;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            flex-shrink: 0;
+            border-radius: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .game-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #00ffff;
+            text-shadow: 0 0 20px #00ffff;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+        
+        .game-subtitle {
+            font-size: 1rem;
+            color: #ffffff;
+            opacity: 0.8;
+            text-align: center;
+        }
+        
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 10px;
+            gap: 20px;
+            min-height: 0;
+            flex-wrap: wrap;
+        }
+        
+        .image-container {
+            flex: 1;
+            text-align: center;
+            max-width: 45%;
+            min-width: 280px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            position: relative;
+        }
+        
+        .crab-iguana-image {
+            max-width: 100%;
+            max-height: 45vh;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+            border: 3px solid #00ffff;
+            object-fit: cover;
+            margin-top: 20px;
+            width: 100%;
+            min-height: 300px;
+        }
+        
+        .game-board {
+            flex: 1;
+            max-width: 55%;
+            min-width: 280px;
+            text-align: center;
+            overflow-y: auto;
+            max-height: 75vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        
+        .instructions {
+            background: rgba(255, 107, 53, 0.95);
+            border: 2px solid #ff6b35;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .instructions h3 {
+            font-family: 'Orbitron', monospace;
+            color: #ffffff;
+            margin: 0 0 6px 0;
+            font-size: 1.1rem;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        
+        .instructions p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #ffffff;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        
+        .guess-input-container {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            align-items: center;
+            margin: 15px auto;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            border: 2px solid #ff6b35;
+            max-width: 450px;
+            flex-wrap: wrap;
+        }
+        
+        .letter-input {
+            width: 40px;
+            height: 50px;
+            font-size: 1.4rem;
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7);
+            border: 3px solid #ffffff;
+            border-radius: 8px;
+            color: #ffffff;
+            text-transform: uppercase;
+            outline: none;
+            transition: all 0.3s ease;
+            padding: 0;
+        }
+        
+        .letter-input:focus {
+            border-color: #ff00ff;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+        }
+        
+        .phrase-container {
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid #00ffff;
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+            margin-top: 10px;
+        }
+        
+        .word-line {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin: 10px 0;
+            flex-wrap: wrap;
+        }
+        
+        .letter-box {
+            width: 40px;
+            height: 50px;
+            border: 3px solid #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', monospace;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #ffffff;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .letter-box.revealed {
+            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            color: #000000;
+            animation: letterReveal 0.5s ease-out;
+        }
+        
+        .letter-box.pre-revealed {
+            background: linear-gradient(45deg, #ffd700, #ffb347);
+            color: #000000;
+        }
+        
+        .completion-message {
+            background: linear-gradient(45deg, #00ff00, #00ffff);
+            color: #000000;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 15px auto;
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: none;
+            animation: celebration 1s ease-out;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(0, 255, 255, 0.8);
+            border: 3px solid #ffffff;
+            max-width: 450px;
+            width: auto;
+            min-width: 350px;
+        }
+        
+        /* Framework Styles */
+        .framework-container {
+            background: rgba(0, 0, 0, 0.6);
+            border: 3px solid #00ffff;
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 0 40px rgba(0, 255, 255, 0.3);
+            margin-bottom: 25px;
+            animation: levelUp 2s ease-in-out infinite;
+            width: 100%;
+            max-width: 900px;
+        }
+        
+        .framework-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .framework-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 18px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            border-left: 4px solid #ff6b35;
+            transition: all 0.3s ease;
+        }
+        
+        .framework-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(255, 107, 53, 0.3);
+        }
+        
+        .letter-highlight {
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            color: #ffffff;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-weight: 700;
+            margin-right: 18px;
+            min-width: 35px;
+            text-align: center;
+            font-family: 'Orbitron', monospace;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+        }
+        
+        .letter-description {
+            flex: 1;
+        }
+        
+        .letter-description strong {
+            color: #00ffff;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+        
+        .letter-description p {
+            margin: 6px 0 0 0;
+            line-height: 1.4;
+            font-size: 0.95rem;
+        }
+        
+        .pro-tip {
+            background: linear-gradient(45deg, rgba(255, 215, 0, 0.1), rgba(255, 183, 77, 0.1));
+            border: 3px solid #ffd700;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.2);
+        }
+        
+        .pro-tip-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(45deg, #ffd700, #ffb347);
+            color: #000000;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+        }
+        
+        .pro-tip-text {
+            font-size: 1rem;
+            color: #ffffff;
+            line-height: 1.4;
+            font-weight: 600;
+        }
+        
+        /* Examples Slider Styles */
+        .examples-container {
+            flex: 1;
+            position: relative;
+            background: rgba(0, 0, 0, 0.6);
+            border: 3px solid #ff00ff;
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 0 40px rgba(255, 0, 255, 0.3);
+            overflow: hidden;
+            margin-bottom: 80px;
+            width: 100%;
+            max-width: 1300px;
+            min-height: 70vh;
+        }
+        
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 25px;
+            background: rgba(0, 0, 0, 0.4);
+            border-bottom: 2px solid #ff00ff;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        .scenario-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.6rem;
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff;
+            font-weight: 900;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+            flex: 1;
+            min-width: 220px;
+        }
+        
+        .slider-controls {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .slider-btn {
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+            color: #000000;
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(255, 0, 255, 0.3);
+        }
+        
+        .slider-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(255, 0, 255, 0.6);
+        }
+        
+        .slider-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .slider-indicator {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.9rem;
+            color: #ffffff;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 6px 14px;
+            border-radius: 18px;
+            border: 2px solid #ff00ff;
+            min-width: 70px;
+            text-align: center;
+        }
+        
+        .examples-viewport {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            height: calc(70vh - 120px);
+            min-height: 500px;
+        }
+        
+        .example-slide {
+            min-width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            padding: 25px;
+            gap: 20px;
+            box-sizing: border-box;
+        }
+        
+        .prompt-block {
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            padding: 20px;
+            border-left: 4px solid;
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .bad-prompt {
+            border-left-color: #ff0000;
+            background: rgba(255, 0, 0, 0.1);
+        }
+        
+        .good-prompt {
+            border-left-color: #00ff00;
+            background: rgba(0, 255, 0, 0.1);
+        }
+        
+        .evaluate-block {
+            border-left-color: #0096ff;
+            background: rgba(0, 150, 255, 0.1);
+        }
+        
+        .iterate-block {
+            border-left-color: #ffd700;
+            background: rgba(255, 215, 0, 0.1);
+        }
+        
+        .prompt-label {
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .bad-prompt .prompt-label {
+            color: #ff6b6b;
+        }
+        
+        .good-prompt .prompt-label {
+            color: #51cf66;
+        }
+        
+        .evaluate-block .prompt-label {
+            color: #0096ff;
+        }
+        
+        .iterate-block .prompt-label {
+            color: #ffd700;
+        }
+        
+        .prompt-text {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 16px;
+            border-radius: 10px;
+            font-family: 'Monaco', monospace;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            flex: 1;
+            overflow-y: auto;
+        }
+        
+        .evaluation-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .evaluation-list li {
+            padding: 6px 0;
+            padding-left: 18px;
+            position: relative;
+            line-height: 1.4;
+        }
+        
+        .evaluation-list li::before {
+            content: "•";
+            color: #00ffff;
+            font-weight: 700;
+            position: absolute;
+            left: 0;
+        }
+        
+        .iterate-list li::before {
+            color: #ffd700;
+        }
+        
+        /* Meta Prompt Styles */
+        .meta-prompt-container {
+            background: rgba(0, 0, 0, 0.6);
+            border: 3px solid #ffd700;
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.3);
+            margin-bottom: 25px;
+            animation: float 6s ease-in-out infinite;
+            width: 100%;
+            max-width: 900px;
+        }
+        
+        .prompt-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.6rem;
+            color: #ffd700;
+            text-align: center;
+            margin-bottom: 25px;
+            text-shadow: 0 0 15px #ffd700;
+            letter-spacing: 1px;
+        }
+        
+        .meta-prompt-text {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #ff6b35;
+            border-radius: 15px;
+            padding: 20px;
+            font-family: 'Monaco', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #ffffff;
+            white-space: pre-wrap;
+            margin-bottom: 20px;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .fill-blank {
+            background: linear-gradient(45deg, #ff6b35, #ffd700);
+            color: #000000;
+            padding: 2px 8px;
+            border-radius: 5px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
+        .usage-tips {
+            background: linear-gradient(45deg, rgba(255, 107, 53, 0.1), rgba(255, 183, 77, 0.1));
+            border: 3px solid #ff6b35;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 25px 0;
+            box-shadow: 0 0 25px rgba(255, 107, 53, 0.2);
+            width: 100%;
+            max-width: 900px;
+        }
+        
+        .usage-tips h3 {
+            font-family: 'Orbitron', monospace;
+            color: #ff6b35;
+            margin: 0 0 16px 0;
+            font-size: 1.2rem;
+            text-align: center;
+            text-shadow: 0 0 10px #ff6b35;
+        }
+        
+        .tip-item {
+            margin: 12px 0;
+            padding: 12px 12px 12px 35px;
+            position: relative;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            line-height: 1.4;
+            font-size: 0.95rem;
+        }
+        
+        .tip-item::before {
+            content: "🎯";
+            position: absolute;
+            left: 12px;
+            top: 12px;
+            font-size: 1.1rem;
+        }
+        
+        /* Combat Training Styles */
+        .combat-arena {
+            background: rgba(0, 0, 0, 0.6);
+            border: 3px solid #ff0000;
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.4);
+            margin-bottom: 30px;
+            width: 100%;
+            max-width: 1000px;
+        }
+        
+        .arena-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            color: #ff0000;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px #ff0000;
+        }
+        
+        .training-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .info-card {
+            background: rgba(255, 0, 0, 0.1);
+            border: 2px solid #ff6b35;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+        }
+        
+        .info-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .info-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.2rem;
+            color: #ff6b35;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .info-text {
+            color: #ffffff;
+            font-size: 1rem;
+            line-height: 1.4;
+        }
+        
+        .combat-prompt {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #ff6b35;
+            border-radius: 15px;
+            padding: 25px;
+            font-family: 'Monaco', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #ffffff;
+            white-space: pre-wrap;
+            margin-bottom: 25px;
+            position: relative;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .phase-highlight {
+            background: linear-gradient(45deg, #ff6b35, #ffd700);
+            color: #000000;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+        
+        .skill-highlight {
+            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            color: #000000;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+        
+        .scenario-briefing {
+            background: rgba(255, 107, 53, 0.1);
+            border: 2px solid #ff6b35;
+            border-radius: 15px;
+            margin: 25px 0;
+            overflow: hidden;
+        }
+        
+        .briefing-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 25px;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .briefing-header:hover {
+            background: rgba(255, 107, 53, 0.2);
+        }
+        
+        .briefing-icon {
+            font-size: 1.2rem;
+            margin-right: 10px;
+        }
+        
+        .briefing-title {
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #ff6b35;
+            flex: 1;
+        }
+        
+        .briefing-arrow {
+            font-size: 1rem;
+            color: #ff6b35;
+            transition: transform 0.3s ease;
+        }
+        
+        .briefing-arrow.rotated {
+            transform: rotate(180deg);
+        }
+        
+        .scenario-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .scenario-content.expanded {
+            max-height: 1000px;
+        }
+        
+        .scenario-instructions {
+            padding: 25px;
+            background: rgba(0, 0, 0, 0.4);
+            border-bottom: 1px solid rgba(255, 107, 53, 0.3);
+        }
+        
+        .instruction-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.1rem;
+            color: #ffd700;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .instruction-text {
+            color: #ffffff;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+        
+        .highlight-text {
+            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            color: #000000;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+        
+        .scenario-samples {
+            padding: 20px 25px;
+        }
+        
+        .sample-scenario {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .sample-scenario:last-child {
+            margin-bottom: 0;
+        }
+        
+        .scenario-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            background: rgba(255, 107, 53, 0.1);
+            border-bottom: 1px solid rgba(255, 107, 53, 0.3);
+        }
+        
+        .copy-scenario-btn {
+            padding: 6px 12px;
+            background: linear-gradient(45deg, #ffd700, #ff6b35);
+            color: #000000;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+        
+        .copy-scenario-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+        }
+        
+        .scenario-text {
+            padding: 20px;
+            font-family: 'Monaco', monospace;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #ffffff;
+            white-space: pre-wrap;
+        }
+        
+        /* Education Center Styles */
+        .knowledge-center {
+            background: rgba(0, 0, 0, 0.6);
+            border: 3px solid #0096ff;
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 0 40px rgba(0, 150, 255, 0.4);
+            margin-bottom: 30px;
+            animation: float 6s ease-in-out infinite;
+            width: 100%;
+            max-width: 1000px;
+        }
+        
+        .knowledge-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            color: #0096ff;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 0 0 15px #0096ff;
+            letter-spacing: 1px;
+        }
+        
+        .definition-section {
+            background: rgba(0, 150, 255, 0.1);
+            border: 2px solid #0096ff;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .definition-intro {
+            font-size: 1.2rem;
+            color: #ffffff;
+            line-height: 1.5;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .capabilities-list {
+            margin: 20px 0;
+        }
+        
+        .capability-item {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            border-left: 4px solid #00ffff;
+            transition: all 0.3s ease;
+        }
+        
+        .capability-item:hover {
+            transform: translateX(5px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 5px 20px rgba(0, 255, 255, 0.3);
+        }
+        
+        .capability-icon {
+            color: #00ffff;
+            font-size: 1.3rem;
+            margin-right: 20px;
+            min-width: 30px;
+            flex-shrink: 0;
+        }
+        
+        .capability-text {
+            color: #ffffff;
+            font-size: 1.1rem;
+            line-height: 1.4;
+            flex: 1;
+        }
+        
+        .definition-summary {
+            font-size: 1.1rem;
+            color: #00ffff;
+            font-style: italic;
+            text-align: center;
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(0, 255, 255, 0.1);
+            border-radius: 12px;
+            border: 2px solid rgba(0, 255, 255, 0.3);
+        }
+        
+        .example-section {
+            background: rgba(0, 255, 255, 0.1);
+            border: 2px solid #00ffff;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+        
+        .example-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.6rem;
+            color: #00ffff;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 700;
+        }
+        
+        .example-content {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            padding: 25px;
+            border-left: 4px solid #00ffff;
+        }
+        
+        .example-name {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.3rem;
+            color: #00ffff;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .example-description {
+            color: #ffffff;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+        
+        .example-highlight {
+            background: linear-gradient(45deg, #0096ff, #00ffff);
+            color: #000000;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+        
+        .key-insight {
+            background: linear-gradient(45deg, rgba(255, 215, 0, 0.1), rgba(255, 183, 77, 0.1));
+            border: 3px solid #ffd700;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.2);
+        }
+        
+        .insight-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(45deg, #ffd700, #ffb347);
+            color: #000000;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+        }
+        
+        .insight-text {
+            font-size: 1.1rem;
+            color: #ffffff;
+            line-height: 1.4;
+            font-weight: 600;
+        }
+        
+        /* Intelligence Decoder Styles */
+        .decoder-interface {
+            background: rgba(0, 0, 0, 0.6);
+            border: 3px solid #00ff00;
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 0 40px rgba(0, 255, 0, 0.4);
+            margin-bottom: 30px;
+            width: 100%;
+            max-width: 1000px;
+        }
+        
+        .interface-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            color: #00ff00;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 0 0 15px #00ff00;
+            letter-spacing: 1px;
+        }
+        
+        .agent-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .agent-card {
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid #00ff00;
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .agent-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 0, 0.3);
+            border-color: #00ffff;
+        }
+        
+        .agent-card.decoded {
+            border-color: #00ffff;
+            background: rgba(0, 255, 255, 0.1);
+        }
+        
+        .agent-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .agent-name {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.3rem;
+            color: #00ff00;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
+        .agent-status {
+            background: #ff6b35;
+            color: #ffffff;
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+        
+        .agent-status.available { background: #00ff00; color: #000000; }
+        .agent-status.early-access { background: #ffd700; color: #000000; }
+        
+        .agent-description {
+            color: #ffffff;
+            font-size: 1rem;
+            line-height: 1.4;
+            margin-bottom: 15px;
+            flex: 1;
+        }
+        
+        .decode-button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(45deg, #ff6b35, #ffd700);
+            color: #000000;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            margin-top: auto;
+        }
+        
+        .decode-button.decoded {
+            background: linear-gradient(45deg, #00ff00, #00ffff);
+            color: #000000;
+        }
+        
+        .decoded-content {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(0, 255, 255, 0.1);
+            border-radius: 10px;
+            border: 1px solid #00ffff;
+        }
+        
+        .decoded-content.visible {
+            display: block;
+        }
+        
+        .reality-check {
+            background: rgba(0, 255, 0, 0.1);
+            border-left: 4px solid #00ff00;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .reality-title {
+            font-family: 'Orbitron', monospace;
+            color: #00ff00;
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .dayforce-equivalent {
+            background: rgba(0, 255, 255, 0.1);
+            border-left: 4px solid #00ffff;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .dayforce-title {
+            font-family: 'Orbitron', monospace;
+            color: #00ffff;
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .mission-briefing {
+            background: rgba(0, 255, 0, 0.1);
+            border: 2px solid #00ff00;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        
+        .workday-logo-container {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .workday-logo {
+            max-width: 180px;
+            height: auto;
+            filter: brightness(0.9) contrast(1.1);
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 150, 255, 0.3);
+        }
+        
+        .briefing-text {
+            font-size: 1.1rem;
+            color: #ffffff;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .confidence-message {
+            font-size: 1.2rem;
+            color: #00ffff;
+            font-weight: 700;
+            font-style: italic;
+        }
+        
+        .confidence-footer {
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid #00ffff;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .footer-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.6rem;
+            color: #00ffff;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px #00ffff;
+        }
+        
+        .footer-message {
+            font-size: 1.2rem;
+            color: #ffffff;
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+        
+        .footer-cta {
+            font-size: 1.1rem;
+            color: #00ff00;
+            font-weight: 700;
+            font-style: italic;
+        }
+        
+        /* Success Page Styles */
+        .success-header {
+            text-align: center;
+            padding: 40px 20px;
+            animation: celebrationCenter 1.5s ease-out;
+        }
+        
+        @keyframes celebrationCenter {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .achievements-container {
+            background: rgba(0, 0, 0, 0.6);
+            border: 3px solid #ffd700;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 1000px;
+            width: 100%;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.4);
+            animation: slideInUp 1s ease-out 0.5s both;
+        }
+        
+        .achievements-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.2rem;
+            color: #ffd700;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 0 0 15px #ffd700;
+        }
+        
+        .skills-mastered {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .skill-achievement {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #00ffff;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            animation: slideInUp 1s ease-out 0.8s both;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 260px;
+        }
+        
+        .skill-achievement:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.3);
+        }
+        
+        .achievement-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .total-progress {
+            background: rgba(0, 255, 255, 0.1);
+            border: 2px solid #00ffff;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            animation: slideInUp 1s ease-out 1.1s both;
+        }
+        
+        .progress-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            color: #00ffff;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .total-xp {
+            font-family: 'Orbitron', monospace;
+            font-size: 3rem;
+            color: #ffd700;
+            font-weight: 900;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px #ffd700;
+        }
+        
+        .progress-label {
+            font-size: 1.2rem;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+        
+        .level-complete {
+            background: linear-gradient(45deg, #00ff00, #00ffff);
+            color: #000000;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 25px rgba(0, 255, 0, 0.4);
+            margin: 0 auto;
+            display: block;
+        }
+        
+        .level-complete:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 35px rgba(0, 255, 0, 0.8);
+        }
+        
+        .next-steps {
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid #ff6b35;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            animation: slideInUp 1s ease-out 1.4s both;
+        }
+        
+        .next-steps-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.6rem;
+            color: #ff6b35;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .next-steps-text {
+            font-size: 1.2rem;
+            color: #ffffff;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        
+        .challenge-accepted {
+            font-size: 1.1rem;
+            color: #ffd700;
+            font-weight: 700;
+            font-style: italic;
+        }
+        
+        /* Header centering fix */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        /* RESPONSIVE DESIGN - Enhanced for Better Mobile Experience */
+        @media screen and (max-width: 1200px) {
+            .main-content {
+                flex-direction: column;
+                gap: 15px;
+                padding: 12px;
+                align-items: center;
+            }
+            
+            .image-container, .game-board {
+                max-width: 100%;
+                flex: none;
+                min-width: unset;
+            }
+            
+            .crab-iguana-image {
+                max-height: 35vh;
+            }
+            
+            .game-board {
+                max-height: none;
+            }
+            
+            .example-slide {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto auto;
+                padding: 18px;
+                gap: 16px;
+            }
+            
+            .examples-viewport {
+                height: auto;
+                min-height: 450px;
+            }
+            
+            .agent-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .training-info {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+        
+        @media screen and (max-width: 1024px) {
+            .framework-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            
+            .title {
+                font-size: 2.4rem;
+            }
+            
+            .container {
+                padding: 15px 15px 80px 15px;
+            }
+            
+            .skills-mastered {
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+        }
+        
+        @media screen and (max-width: 768px) {
+            .container {
+                width: 98%;
+                padding: 12px 12px 90px 12px;
+            }
+            
+            .nav-container {
+                padding: 8px 12px;
+                gap: 12px;
+                max-width: 95vw;
+                flex-wrap: wrap;
+            }
+            
+            .nav-button {
+                padding: 8px 16px;
+                font-size: 0.8rem;
+            }
+            
+            .btn {
+                padding: 12px 20px;
+                font-size: 0.95rem;
+                min-width: 140px;
+            }
+            
+            .title {
+                font-size: 2.2rem;
+                letter-spacing: 1px;
+            }
+            
+            .main-title {
+                font-size: 2.8rem;
+            }
+            
+            .cover-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .skills-container {
+                padding: 25px;
+                margin: 20px auto;
+                width: 98%;
+            }
+            
+            .skill-item {
+                margin: 18px 0;
+                padding: 15px;
+                flex-direction: column;
+                text-align: center;
+                gap: 12px;
+            }
+            
+            .skill-name {
+                font-size: 1.2rem;
+            }
+            
+            .achievement-badge {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+                margin-right: 0;
+                margin-bottom: 8px;
+            }
+            
+            .cover-container {
+                padding: 25px 15px;
+                width: 98%;
+            }
+            
+            .letter-box {
+                width: 35px;
+                height: 45px;
+                font-size: 1.2rem;
+            }
+            
+            .guess-input-container {
+                flex-direction: column;
+                gap: 12px;
+                padding: 16px;
+            }
+            
+            .letter-input {
+                width: 35px;
+                height: 45px;
+                font-size: 1.2rem;
+            }
+            
+            .game-title {
+                font-size: 1.6rem;
+            }
+            
+            .completion-message {
+                max-width: 88%;
+                padding: 18px;
+                font-size: 0.95rem;
+                min-width: 280px;
+            }
+            
+            .framework-container {
+                padding: 20px;
+            }
+            
+            .framework-item {
+                padding: 12px;
+                flex-direction: column;
+                text-align: center;
+                gap: 12px;
+            }
+            
+            .letter-highlight {
+                margin-right: 0;
+                margin-bottom: 8px;
+            }
+            
+            .slider-header {
+                padding: 16px;
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+            
+            .scenario-title {
+                font-size: 1.3rem;
+                min-width: unset;
+            }
+            
+            .example-slide {
+                padding: 12px;
+                gap: 12px;
+            }
+            
+            .prompt-text {
+                font-size: 0.75rem;
+                padding: 12px;
+            }
+            
+            .meta-prompt-container {
+                padding: 20px;
+            }
+            
+            .meta-prompt-text {
+                font-size: 0.8rem;
+                padding: 16px;
+            }
+            
+            .combat-arena {
+                padding: 25px;
+            }
+            
+            .combat-prompt {
+                font-size: 0.85rem;
+                max-height: 400px;
+            }
+            
+            .scenario-instructions {
+                padding: 20px;
+            }
+            
+            .scenario-samples {
+                padding: 15px 20px;
+            }
+            
+            .scenario-header {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+            
+            .scenario-text {
+                padding: 15px;
+                font-size: 0.8rem;
+            }
+            
+            .briefing-header {
+                padding: 15px 20px;
+            }
+            
+            .briefing-title {
+                font-size: 1rem;
+            }
+            
+            .knowledge-center {
+                padding: 25px;
+            }
+            
+            .definition-section, .example-section {
+                padding: 20px;
+            }
+            
+            .capability-item {
+                padding: 12px;
+                margin: 12px 0;
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .capability-icon {
+                margin-right: 0;
+                font-size: 1.5rem;
+            }
+            
+            .example-content {
+                padding: 20px;
+            }
+            
+            .decoder-interface {
+                padding: 25px;
+            }
+            
+            .agent-card {
+                padding: 20px;
+            }
+            
+            .agent-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .workday-logo {
+                max-width: 150px;
+            }
+            
+            .achievements-container {
+                padding: 25px;
+                margin: 0 10px;
+            }
+            
+            .skills-mastered {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .skill-achievement {
+                padding: 18px;
+                min-height: 240px;
+            }
+            
+            .total-xp {
+                font-size: 2.2rem;
+            }
+        }
+        
+        @media screen and (max-width: 480px) {
+            .container {
+                padding: 10px 10px 90px 10px;
+            }
+            
+            .title {
+                font-size: 1.8rem;
+            }
+            
+            .main-title {
+                font-size: 2.2rem;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                gap: 8px;
+                padding: 12px;
+            }
+            
+            .nav-button {
+                width: 180px;
+                text-align: center;
+            }
+        }
+        
+        /* Performance optimization */
+        .level-container:not(.active) {
+            visibility: hidden;
+        }
+        
+        /* Scroll optimization */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-bg" id="gridBg"></div>
+    
+    <!-- Level 0: Cover Page -->
+    <div id="level0" class="level-container active">
+        <div class="cover-container">
+            <div class="level-indicator">DAYFORCE LVL 99</div>
+            
+            <h1 class="main-title">AI Power-Up<br>Protocol</h1>
+            <p class="cover-subtitle">Unlock Advanced Skills • Defeat Boss Objections • Beat the Competition</p>
+            
+            <div class="skills-container">
+                <div class="skill-item">
+                    <div class="achievement-badge">🎯</div>
+                    <div class="skill-info">
+                        <div class="skill-name">Prompting Framework Mastery</div>
+                        <div class="skill-progress">
+                            <div class="progress-bar progress-bar-92"></div>
+                        </div>
+                        <div class="xp-indicator">+2500 XP</div>
+                    </div>
+                </div>
+                
+                <div class="skill-item">
+                    <div class="achievement-badge">⚔️</div>
+                    <div class="skill-info">
+                        <div class="skill-name">Objection Handling Combat</div>
+                        <div class="skill-progress">
+                            <div class="progress-bar progress-bar-78"></div>
+                        </div>
+                        <div class="xp-indicator">+3000 XP</div>
+                    </div>
+                </div>
+                
+                <div class="skill-item">
+                    <div class="achievement-badge">🛡️</div>
+                    <div class="skill-info">
+                        <div class="skill-name">Competitive Intelligence</div>
+                        <div class="skill-progress">
+                            <div class="progress-bar progress-bar-85"></div>
+                        </div>
+                        <div class="xp-indicator">+1500 XP</div>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="bottom-tagline">From AI User to AI Power User in 30 Minutes</p>
+            
+            <button class="btn primary" onclick="startGame()">START GAME</button>
+        </div>
+    </div>
+    
+    <!-- Level 1: TCREI Game -->
+    <div id="level1" class="level-container">
+        <div class="game-container">
+            <div class="game-header">
+                <h1 class="game-title">LEVEL 1: PROMPTING FRAMEWORK MASTERY</h1>
+                <p class="game-subtitle">Crack the Code for Perfect Prompting</p>
+            </div>
+            
+            <div class="main-content">
+                <div class="image-container">
+                    <div class="instructions">
+                        <h3>🎯 Mission: Decode the Perfect Prompting Framework</h3>
+                        <p>Guess letters to reveal the secret phrase!</p>
+                    </div>
+                    <img src="crab-iguana.jpg" 
+                         alt="Tiny Crabs Riding Enormous Iguana" 
+                         class="crab-iguana-image" />
+                </div>
+                
+                <div class="game-board">
+                    <div class="guess-input-container">
+                        <input type="text" id="letterInput" maxlength="1" class="letter-input">
+                        <button onclick="guessLetter()" class="btn primary">GUESS!</button>
+                        <button onclick="revealAll()" class="btn secondary">REVEAL ALL</button>
+                    </div>
+                    
+                    <div class="phrase-container">
+                        <div class="word-line">
+                            <div class="letter-box" data-letter="T">_</div>
+                            <div class="letter-box pre-revealed">I</div>
+                            <div class="letter-box" data-letter="N">_</div>
+                            <div class="letter-box" data-letter="Y">_</div>
+                        </div>
+                        
+                        <div class="word-line">
+                            <div class="letter-box" data-letter="C">_</div>
+                            <div class="letter-box pre-revealed">R</div>
+                            <div class="letter-box pre-revealed">A</div>
+                            <div class="letter-box" data-letter="B">_</div>
+                            <div class="letter-box pre-revealed">S</div>
+                        </div>
+                        
+                        <div class="word-line">
+                            <div class="letter-box pre-revealed">R</div>
+                            <div class="letter-box pre-revealed">I</div>
+                            <div class="letter-box" data-letter="D">_</div>
+                            <div class="letter-box pre-revealed">E</div>
+                        </div>
+                        
+                        <div class="word-line">
+                            <div class="letter-box pre-revealed">E</div>
+                            <div class="letter-box" data-letter="N">_</div>
+                            <div class="letter-box pre-revealed">O</div>
+                            <div class="letter-box" data-letter="R">_</div>
+                            <div class="letter-box" data-letter="M">_</div>
+                            <div class="letter-box pre-revealed">O</div>
+                            <div class="letter-box pre-revealed">U</div>
+                            <div class="letter-box" data-letter="S">_</div>
+                        </div>
+                        
+                        <div class="word-line">
+                            <div class="letter-box pre-revealed">I</div>
+                            <div class="letter-box" data-letter="G">_</div>
+                            <div class="letter-box pre-revealed">U</div>
+                            <div class="letter-box pre-revealed">A</div>
+                            <div class="letter-box" data-letter="N">_</div>
+                            <div class="letter-box pre-revealed">A</div>
+                            <div class="letter-box" data-letter="S">_</div>
+                        </div>
+                    </div>
+                    
+                    <div class="completion-message" id="completionMessage">
+                        🎉 ACHIEVEMENT UNLOCKED! 🎉<br>
+                        You've decoded the perfect prompting framework!<br>
+                        <strong>TINY CRABS RIDE ENORMOUS IGUANAS</strong>
+                        <div style="margin-top: 20px;">
+                            <button class="btn primary" onclick="nextLevel()">NEXT LEVEL</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Level 1A: TCREI Framework -->
+    <div id="level1a" class="level-container">
+        <div class="container">
+            <div class="header">
+                <div class="badge primary">🎯 FRAMEWORK DECODED</div>
+                <h1 class="title" style="color: #00ffff; animation: glow 3s ease-in-out infinite;">TCREI Framework</h1>
+                <p class="subtitle">Master the Art of AI Prompting</p>
+            </div>
+            
+            <div class="framework-container">
+                <div class="framework-grid">
+                    <div class="framework-item">
+                        <div class="letter-highlight">T</div>
+                        <div class="letter-description">
+                            <strong>Task</strong>
+                            <p>Define exactly what you want the AI to do. Be specific and clear about the desired output.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="framework-item">
+                        <div class="letter-highlight">C</div>
+                        <div class="letter-description">
+                            <strong>Context</strong>
+                            <p>Provide relevant background information, your role, and the situation.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="framework-item">
+                        <div class="letter-highlight">R</div>
+                        <div class="letter-description">
+                            <strong>References</strong>
+                            <p>Include examples, templates, or styles you want the AI to follow.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="framework-item">
+                        <div class="letter-highlight">E</div>
+                        <div class="letter-description">
+                            <strong>Evaluate</strong>
+                            <p>Set clear criteria for success and review the output against those criteria.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="framework-item">
+                        <div class="letter-highlight">I</div>
+                        <div class="letter-description">
+                            <strong>Iterate</strong>
+                            <p>Be prepared to refine your prompt based on the AI's response.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="pro-tip">
+                    <div class="pro-tip-badge">
+                        🚀 PRO TIP
+                    </div>
+                    <div class="pro-tip-text">
+                        <strong>Add Personas for Power!</strong> Start with "Act as a [expert role]" to get more specialized, industry-focused responses that sound authentic.
+                    </div>
+                </div>
+            </div>
+            
+            <button class="btn primary" onclick="continueToExamples()">
+                🎯 See Detailed Examples
+            </button>
+        </div>
+    </div>
+    
+    <!-- Level 1B: Examples -->
+    <div id="level1b" class="level-container">
+        <div class="container" style="width: 100%; max-width: 1400px; flex-direction: column; min-height: 100vh;">
+            <div class="header" style="margin-bottom: 30px; padding: 20px 0;">
+                <h1 class="title" style="font-size: 3.5rem; color: #00ffff; animation: glow 3s ease-in-out infinite;">TCREI Examples</h1>
+                <p class="subtitle">Real Dayforce Scenarios with TCREI Framework</p>
+            </div>
+            
+            <div class="examples-container">
+                <div class="slider-header">
+                    <div class="scenario-title" id="scenarioTitle">Discovery Question Design</div>
+                    <div class="slider-controls">
+                        <button class="slider-btn" onclick="previousExample()" id="prevBtn">←</button>
+                        <div class="slider-indicator">
+                            <span id="currentExample">1</span> / 3
+                        </div>
+                        <button class="slider-btn" onclick="nextExample()" id="nextBtn">→</button>
+                    </div>
+                </div>
+                
+                <div class="examples-viewport" id="viewport">
+                    <!-- Example 1: Discovery Questions -->
+                    <div class="example-slide">
+                        <div class="prompt-block bad-prompt">
+                            <div class="prompt-label">❌ Basic Prompt</div>
+                            <div class="prompt-text">Give me discovery questions for a retail customer.</div>
+                        </div>
+                        
+                        <div class="prompt-block good-prompt">
+                            <div class="prompt-label">✅ TCR Enhanced Prompt</div>
+                            <div class="prompt-text">Act as a Dayforce solution advisor preparing for a discovery session with a global retail chain expanding across Asia. Since we won't yet know their exact problems, list common challenges in the retail sector (e.g. shift coverage, scheduling, workforce productivity) that are likely to apply. Generate 5 strategic discovery questions that help uncover these potential pain points, focusing on workforce management, compliance risks, and agility.</div>
+                        </div>
+                        
+                        <div class="prompt-block evaluate-block">
+                            <div class="prompt-label">📊 Evaluate</div>
+                            <ul class="evaluation-list">
+                                <li>Are the questions open-ended and business-oriented?</li>
+                                <li>Do they reflect common retail sector challenges?</li>
+                                <li>Are they phrased in a conversational tone suitable for live dialogue?</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="prompt-block iterate-block">
+                            <div class="prompt-label">🔄 Iterate</div>
+                            <ul class="evaluation-list iterate-list">
+                                <li>"Rephrase these questions to avoid sounding like an audit."</li>
+                                <li>"Include a prompt that helps reveal current scheduling pain points."</li>
+                                <li>"Convert yes/no questions into open-ended formats."</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Example 2: Demo Preparation -->
+                    <div class="example-slide">
+                        <div class="prompt-block bad-prompt">
+                            <div class="prompt-label">❌ Basic Prompt</div>
+                            <div class="prompt-text">Help me build a Dayforce demo for onboarding.</div>
+                        </div>
+                        
+                        <div class="prompt-block good-prompt">
+                            <div class="prompt-label">✅ TCR Enhanced Prompt</div>
+                            <div class="prompt-text">You are a senior Dayforce solution advisor. We're meeting a CHRO at a healthcare company with high nurse turnover. The client wants to improve onboarding speed and experience. Create a demo storyboard that highlights onboarding, mobile access, and compliance tracking. Make it relevant to clinical roles and keep it under 10 minutes.</div>
+                        </div>
+                        
+                        <div class="prompt-block evaluate-block">
+                            <div class="prompt-label">📊 Evaluate</div>
+                            <ul class="evaluation-list">
+                                <li>Does the storyboard clearly address nurse-specific pain points (e.g. compliance, short staffing, mobile access)?</li>
+                                <li>Does the flow fit within 10 minutes?</li>
+                                <li>Is there a logical and smooth transition across modules?</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="prompt-block iterate-block">
+                            <div class="prompt-label">🔄 Iterate</div>
+                            <ul class="evaluation-list iterate-list">
+                                <li>"Tighten the storyboard to keep the full demo under 10 minutes."</li>
+                                <li>"Add a transition between onboarding and compliance modules."</li>
+                                <li>"Include a real-world scenario of a nurse using mobile onboarding."</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Example 3: Competitive Objection Handling -->
+                    <div class="example-slide">
+                        <div class="prompt-block bad-prompt">
+                            <div class="prompt-label">❌ Basic Prompt</div>
+                            <div class="prompt-text">How do I respond if someone says Workday is better?</div>
+                        </div>
+                        
+                        <div class="prompt-block good-prompt">
+                            <div class="prompt-label">✅ TCR Enhanced Prompt</div>
+                            <div class="prompt-text">You are an experienced solution advisor at Dayforce. The CHRO believes Workday is more modern and integrated. Write a confident but respectful response that positions Dayforce's unified platform, real-time payroll, and configurability as strengths. Keep it concise for a live conversation.</div>
+                        </div>
+                        
+                        <div class="prompt-block evaluate-block">
+                            <div class="prompt-label">📊 Evaluate</div>
+                            <ul class="evaluation-list">
+                                <li>Are the differentiators specific and relevant to the objection?</li>
+                                <li>Is the tone respectful and consultative?</li>
+                                <li>Would this response land well in a C-suite conversation?</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="prompt-block iterate-block">
+                            <div class="prompt-label">🔄 Iterate</div>
+                            <ul class="evaluation-list iterate-list">
+                                <li>"Shorten this to make it suitable for a real-time conversation."</li>
+                                <li>"Include a short customer story or proof point."</li>
+                                <li>"Make the tone more consultative rather than defensive."</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Secret Level: Meta Prompting -->
+    <div id="secret" class="level-container">
+        <div class="container">
+            <div class="header">
+                <div class="badge secret">🔓 SECRET LEVEL UNLOCKED</div>
+                <h1 class="title" style="color: #ffd700; animation: secretGlow 3s ease-in-out infinite;">Meta Prompting</h1>
+                <p class="subtitle">The Ultimate AI Whispering Cheat Code</p>
+                <p style="font-size: 1.1rem; color: #ffd700; font-style: italic; max-width: 700px; margin: 0 auto; line-height: 1.4; text-align: center;">Use this master template to get AI to help you craft perfect TCREI prompts for any situation</p>
+            </div>
+            
+            <div class="meta-prompt-container">
+                <div class="prompt-title">🎯 The Universal Meta Prompt Template</div>
+                
+                <div class="meta-prompt-text" id="metaPromptText">I need help with <span class="fill-blank">[SITUATION]</span>. Create a prompt that will give me exactly what I need. First, help me choose the right expert persona for this situation, then guide me through structuring this using task, context, references, and desired format. Ask clarifying questions to make sure we get this right.</div>
+                
+                <button class="btn secret" onclick="copyToClipboard()">
+                    📋 COPY TEMPLATE
+                </button>
+            </div>
+            
+            <div class="usage-tips">
+                <h3>🚀 Pro Tips for Maximum Impact</h3>
+                <div class="tip-item">Replace <span class="fill-blank">[SITUATION]</span> with your specific challenge</div>
+                <div class="tip-item">Just type this directly into any AI tool - no copy-paste needed!</div>
+                <div class="tip-item">Let the AI ask questions and guide you through the process</div>
+                <div class="tip-item">Works for any sales scenario: emails, objections, discovery, presentations</div>
+                <div class="tip-item">Simple, fast, and gets you professional results every time</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Level 2: Objection Handling -->
+    <div id="level2" class="level-container">
+        <div class="container">
+            <div class="header">
+                <div class="badge combat">⚔️ COMBAT TRAINING ACTIVATED</div>
+                <h1 class="title" style="color: #ff0000; animation: combatGlow 3s ease-in-out infinite;">Level 2: Objection Handling</h1>
+                <p class="subtitle">Advanced Combat Training with Skill Evaluation</p>
+                <p style="font-size: 1.1rem; color: #ff6b35; max-width: 700px; margin: 0 auto; line-height: 1.4; text-align: center;">Train against real customer scenarios using AI-powered roleplay. Practice handling objections with structured phases and detailed skill-level feedback.</p>
+            </div>
+            
+            <div class="combat-arena">
+                <div class="arena-title">🎯 Deploy Your AI Training Partner</div>
+                
+                <div class="training-info">
+                    <div class="info-card">
+                        <span class="info-icon">🤖</span>
+                        <div class="info-title">AI Simulation</div>
+                        <div class="info-text">Your AI becomes a challenging prospect based on real scenarios with structured phases and progressive difficulty</div>
+                    </div>
+                    <div class="info-card">
+                        <span class="info-icon">📊</span>
+                        <div class="info-title">Skill Evaluation</div>
+                        <div class="info-text">Get detailed feedback across 5 skill categories with Foundational, Experienced, or Advanced ratings</div>
+                    </div>
+                </div>
+                
+                <div class="combat-prompt" id="combatPromptText">You are an expert sales trainer specializing in Dayforce objection handling. You will guide me through a simulation with three phases: Setup → Roleplay → Scoring.
+
+<span class="phase-highlight">PHASE 1: SETUP – Ask Me These Questions One at a Time</span>
+
+1. Describe a recent prospect situation where you faced objections or pushback. What was the context?
+2. What was the prospect's role, and what were they primarily concerned about?
+3. What type of company was this? (Size, industry, current HR setup, etc.)
+4. What specific objection(s) did they raise? If there were multiple, which was the most challenging to overcome?
+5. How did the conversation end, and what would you like to practice improving?
+
+After I answer all five questions, adopt the role of the exact prospect I described. Begin the roleplay by restating their objection in a natural tone, and simulate the rest of the conversation based on that scenario.
+
+<span class="phase-highlight">PHASE 2: ROLEPLAY – Simulate the Prospect Conversation</span>
+
+Stay in character as the prospect. Begin the conversation by raising the main objection I described.
+
+• Engage in <strong>2 to 3 exchanges</strong> focused on that core objection before evolving the conversation.
+• Then, introduce <strong>a new challenge or complication</strong> — such as a budget constraint, competitive pressure, stakeholder pushback, or shifting timelines.
+• Repeat this rhythm if time allows: explore a challenge thoroughly before moving to the next one.
+
+Keep your responses to 2–3 sentences each. After 6 to 8 total back-and-forths, or when I type "End," say "END ROLEPLAY" and move to scoring.
+
+<span class="phase-highlight">PHASE 3: SCORING – Evaluate My Performance by Skill Category</span>
+
+For each of the 5 categories below:
+
+• Assess how I performed in the conversation
+• Assign a skill level: <span class="skill-highlight">Foundational</span>, <span class="skill-highlight">Experienced</span>, or <span class="skill-highlight">Advanced</span>
+• Identify 1–2 things I did well
+• Suggest 2–3 areas for improvement
+
+<strong>1. Empathy & Rapport</strong>
+<strong>2. Logical Response</strong>
+<strong>3. Supporting Evidence</strong>
+<strong>4. Adaptability</strong>
+<strong>5. Closing Technique</strong>
+
+<span class="phase-highlight">PHASE 4: REFLECTION – Ask Me This Final Question</span>
+
+"What's one skill you leaned on most during that conversation, and what's one thing you'd do differently next time?"</div>
+                
+                <button class="btn combat" onclick="deployTraining()">
+                    ⚔️ DEPLOY TRAINING SIMULATION
+                </button>
+                
+                <div class="scenario-briefing">
+                    <div class="briefing-header" onclick="toggleScenarios()">
+                        <span class="briefing-icon">📋</span>
+                        <span class="briefing-title">Sample Scenarios (Click to Expand)</span>
+                        <span class="briefing-arrow" id="scenarioArrow">▼</span>
+                    </div>
+                    
+                    <div class="scenario-content" id="scenarioContent">
+                        <div class="scenario-instructions">
+                            <div class="instruction-title">🔧 How to Use the Sample Scenarios</div>
+                            <div class="instruction-text">
+                                If you don't have a recent objection or prospect situation in mind, you can use one of the scenarios below.
+                                <br><br>
+                                <strong>1.</strong> Copy and paste the full scenario into your response when answering <strong>Question 1</strong> in <strong>Phase 1: Setup</strong>.
+                                <br>
+                                <strong>2.</strong> For <strong>Questions 2 to 5</strong>, respond with: <span class="highlight-text">"Refer to my answer in Question 1."</span>
+                                <br><br>
+                                This tells the LLM that all required context is already covered and it can begin the roleplay directly after Setup.
+                            </div>
+                        </div>
+                        
+                        <div class="scenario-samples">
+                            <div class="sample-scenario">
+                                <div class="scenario-header">
+                                    <span class="scenario-title">Scenario 1: "You're Too Expensive Compared to Our Local Vendor"</span>
+                                    <button class="copy-scenario-btn" onclick="copyScenario('scenario1', this)">📋 Copy</button>
+                                </div>
+                                <div class="scenario-text" id="scenario1">**Context:**
+You're speaking with the CHRO of a 2,500-employee retail chain expanding across Southeast Asia. They currently use a local payroll system in each country and are managing scheduling in Excel. They're interested in Dayforce for workforce management and payroll.
+
+**Objection:**
+"We're intrigued, but your pricing is more than double what we're paying our local vendor. I need to justify that difference, and I'm struggling to see how this investment pays off — especially in countries like Vietnam or Indonesia."</div>
+                            </div>
+                            
+                            <div class="sample-scenario">
+                                <div class="scenario-header">
+                                    <span class="scenario-title">Scenario 2: "Our People Won't Use It Anyway"</span>
+                                    <button class="copy-scenario-btn" onclick="copyScenario('scenario2', this)">📋 Copy</button>
+                                </div>
+                                <div class="scenario-text" id="scenario2">**Context:**
+You're meeting with the COO of a healthcare company with 5,000 employees across clinics in Australia and Singapore. They're evaluating Dayforce for core HR, onboarding, and mobile scheduling.
+
+**Objection:**
+"This all sounds good in theory, but our nurses and frontline workers aren't tech-savvy. We've tried implementing new systems before and adoption is always a nightmare. I don't want to spend money on software that nobody uses."</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 30px;">
+                    <div style="background: rgba(255, 107, 53, 0.1); border: 2px solid #ff6b35; border-radius: 10px; padding: 20px; text-align: center;">
+                        <span style="font-family: 'Orbitron', monospace; font-size: 1.6rem; color: #ff6b35; font-weight: 700; display: block; margin-bottom: 10px;">4</span>
+                        <span style="font-size: 0.9rem; color: #ffffff; opacity: 0.9;">Training Phases</span>
+                    </div>
+                    <div style="background: rgba(255, 107, 53, 0.1); border: 2px solid #ff6b35; border-radius: 10px; padding: 20px; text-align: center;">
+                        <span style="font-family: 'Orbitron', monospace; font-size: 1.6rem; color: #ff6b35; font-weight: 700; display: block; margin-bottom: 10px;">5</span>
+                        <span style="font-size: 0.9rem; color: #ffffff; opacity: 0.9;">Skill Categories</span>
+                    </div>
+                    <div style="background: rgba(255, 107, 53, 0.1); border: 2px solid #ff6b35; border-radius: 10px; padding: 20px; text-align: center;">
+                        <span style="font-family: 'Orbitron', monospace; font-size: 1.6rem; color: #ff6b35; font-weight: 700; display: block; margin-bottom: 10px;">3</span>
+                        <span style="font-size: 0.9rem; color: #ffffff; opacity: 0.9;">Skill Levels</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Level 3A: AI Agent Fundamentals -->
+    <div id="level3a" class="level-container">
+        <div class="container">
+            <div class="header">
+                <div class="badge education">📚 KNOWLEDGE CENTER ACTIVE</div>
+                <h1 class="title" style="color: #0096ff; animation: eduGlow 4s ease-in-out infinite;">Level 3A: AI Agent Fundamentals</h1>
+                <p class="subtitle">Understanding True AI Agents vs. Marketing Hype</p>
+            </div>
+            
+            <div class="knowledge-center">
+                <div class="knowledge-title">🤖 What is an Actual AI Agent?</div>
+                
+                <div class="definition-section">
+                    <div class="definition-intro">
+                        An AI agent is software that can autonomously perform complex, multi-step tasks with minimal human intervention. True AI agents possess these core capabilities:
+                    </div>
+                    
+                    <div class="capabilities-list">
+                        <div class="capability-item">
+                            <div class="capability-icon">🧠</div>
+                            <div class="capability-text">Make independent decisions based on changing conditions</div>
+                        </div>
+                        <div class="capability-item">
+                            <div class="capability-icon">🔄</div>
+                            <div class="capability-text">Reason through problems and adapt their approach</div>
+                        </div>
+                        <div class="capability-item">
+                            <div class="capability-icon">📈</div>
+                            <div class="capability-text">Learn from outcomes to improve future performance</div>
+                        </div>
+                        <div class="capability-item">
+                            <div class="capability-icon">🛡️</div>
+                            <div class="capability-text">Handle unexpected situations without breaking</div>
+                        </div>
+                        <div class="capability-item">
+                            <div class="capability-icon">🔗</div>
+                            <div class="capability-text">Operate across multiple systems and workflows seamlessly</div>
+                        </div>
+                    </div>
+                    
+                    <div class="definition-summary">
+                        Think of it like having a digital employee who can think, decide, and act — not just a smart feature that automates a single workflow.
+                    </div>
+                </div>
+                
+                <div class="key-insight">
+                    <div class="insight-badge">
+                        🎯 KEY INSIGHT
+                    </div>
+                    <div class="insight-text">
+                        <strong>Most "AI Agents" in HR tech are actually automation tools with AI features.</strong> True agents are rare, but understanding the difference helps you have confident conversations with prospects.
+                    </div>
+                </div>
+                
+                <div class="example-section">
+                    <div class="example-title">🎯 Real HR AI Agent Example</div>
+                    <div class="example-content">
+                        <div class="example-name">Paradox's "Olivia" Recruiting Assistant</div>
+                        <div class="example-description">
+                            Olivia comes closer to a true AI agent. It <span class="example-highlight">conducts natural conversations</span> with candidates, <span class="example-highlight">makes scheduling decisions</span> based on complex criteria, <span class="example-highlight">adapts its approach</span> based on candidate responses, <span class="example-highlight">handles unexpected questions</span>, and operates across text, voice, and web channels — all while <span class="example-highlight">learning from each interaction</span> to improve future conversations.
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn education" onclick="continueToDecoding()">
+                    🚀 CONTINUE TO COMPETITIVE ANALYSIS
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Level 3B: Competitive Intelligence -->
+    <div id="level3b" class="level-container">
+        <div class="container">
+            <div class="header">
+                <div class="badge intelligence">🛡️ INTELLIGENCE BRIEFING ACTIVE</div>
+                <h1 class="title" style="color: #00ff00; animation: intelGlow 4s ease-in-out infinite;">Level 3B: Decode the Competition</h1>
+                <p class="subtitle">Workday AI Agents Intelligence Analysis</p>
+                
+                <div class="mission-briefing">
+                    <div class="workday-logo-container">
+                        <img src="workday-logo.png" alt="Workday Logo" class="workday-logo">
+                    </div>
+                    <div class="briefing-text">
+                        <strong>Mission:</strong> Decode Workday's "AI Agents" to understand what they actually do versus the marketing hype.
+                    </div>
+                    <div class="confidence-message">
+                        Spoiler Alert: We already deliver these capabilities - we just call them by what they actually do.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="decoder-interface">
+                <div class="interface-title">🎯 Deploy Intelligence Analysis</div>
+                
+                <div class="agent-grid">
+                    <!-- Recruiting Agent -->
+                    <div class="agent-card" id="recruiting-card">
+                        <div class="agent-header">
+                            <div class="agent-name">Recruiting Agent</div>
+                            <div class="agent-status available">Available Now</div>
+                        </div>
+                        <div class="agent-description">
+                            Automates job descriptions, candidate sourcing, interview scheduling, and provides AI-powered candidate insights. Integrates with Microsoft Teams and rediscovers past applicants.
+                        </div>
+                        <button class="decode-button" onclick="decodeAgent('recruiting')">🔍 Decode This Agent</button>
+                        
+                        <div class="decoded-content" id="recruiting-decoded">
+                            <div class="reality-check">
+                                <div class="reality-title">Reality Check:</div>
+                                <div>It's HiredScore integration with fancy branding. This is recruiting workflow automation with AI features - not a revolutionary "agent."</div>
+                            </div>
+                            <div class="dayforce-equivalent">
+                                <div class="dayforce-title">Dayforce Delivers:</div>
+                                <div>We use AI to grade candidates and match them, and we have the Co-Pilot for job description generation. We deliver AI features with proven ROI, without the "Agent" marketing spin at this time.</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Expenses Agent -->
+                    <div class="agent-card" id="expenses-card">
+                        <div class="agent-header">
+                            <div class="agent-name">Expenses Agent</div>
+                            <div class="agent-status early-access">Early Access 2025</div>
+                        </div>
+                        <div class="agent-description">
+                            Near-touchless expense reporting that matches receipts with credit cards, automatically creates expense lines, and handles complex receipts like hotel bills.
+                        </div>
+                        <button class="decode-button" onclick="decodeAgent('expenses')">🔍 Decode This Agent</button>
+                        
+                        <div class="decoded-content" id="expenses-decoded">
+                            <div class="reality-check">
+                                <div class="reality-title">Reality Check:</div>
+                                <div>While this uses AI, the same outcome can be obtained from optical character recognition (OCR) for receipts with automated expense categorization. The agentic capabilities begin when the claims are identified and it created an expense report automatically. Standard expense management features with "agent" branding.</div>
+                            </div>
+                            <div class="dayforce-equivalent">
+                                <div class="dayforce-title">Dayforce Delivers:</div>
+                                <div>We partner with Emburse as our GTM partner for comprehensive expense reporting with automated receipt capture, policy enforcement, approval workflows, and seamless payroll integration. They use AI to do the same thing as the above.</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Succession Agent -->
+                    <div class="agent-card" id="succession-card">
+                        <div class="agent-header">
+                            <div class="agent-name">Succession Agent</div>
+                            <div class="agent-status early-access">Early Access 2025</div>
+                        </div>
+                        <div class="agent-description">
+                            Transforms succession planning from periodic to continuous, automatically recommends successors, and generates personalized development plans for top talent.
+                        </div>
+                        <button class="decode-button" onclick="decodeAgent('succession')">🔍 Decode This Agent</button>
+                        
+                        <div class="decoded-content" id="succession-decoded">
+                            <div class="reality-check">
+                                <div class="reality-title">Reality Check:</div>
+                                <div>This has yet to be shown or demonstrated so no one really knows what it looks like outside of it being marketing spin. Good HR practice packaged as an "AI agent."</div>
+                            </div>
+                            <div class="dayforce-equivalent">
+                                <div class="dayforce-title">Dayforce Delivers:</div>
+                                <div>We are able to do the above and with a combination of some of our AI features across the suite i.e. candidate matching, we can get the same outcomes. We also have the Career Explorer that uses AI to empower employees to take charge of their career by recommending them jobs, mentors, peers to connect with. We've been delivering comprehensive succession planning for years - we just don't need to call it an "agent."</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Optimize Agent -->
+                    <div class="agent-card" id="optimize-card">
+                        <div class="agent-header">
+                            <div class="agent-name">Optimize Agent</div>
+                            <div class="agent-status early-access">Early Access 2025</div>
+                        </div>
+                        <div class="agent-description">
+                            Identifies process bottlenecks, flags inefficiencies, and can automatically fix issues in business processes like employee onboarding.
+                        </div>
+                        <button class="decode-button" onclick="decodeAgent('optimize')">🔍 Decode This Agent</button>
+                        
+                        <div class="decoded-content" id="optimize-decoded">
+                            <div class="reality-check">
+                                <div class="reality-title">Reality Check:</div>
+                                <div>This is process optimization analytics with automated error detection. System monitoring and workflow improvement tools with "agent" marketing.</div>
+                            </div>
+                            <div class="dayforce-equivalent">
+                                <div class="dayforce-title">Dayforce Delivers:</div>
+                                <div>Our People Analytics platform includes real-time dashboards, predictive ML models, continuous calculation engines, workflow automation, and 16+ out-of-the-box performance dashboards built by data scientists. We deliver advanced process optimization and workforce intelligence as core platform capabilities.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="key-insight">
+                    <div class="insight-badge">
+                        🎯 STRATEGIC INSIGHT
+                    </div>
+                    <div class="insight-text">
+                        <strong>These aren't revolutionary AI agents - they're solid automation features rebranded for marketing impact.</strong> Dayforce already delivers equivalent or superior capabilities across all four areas. The difference? We focus on proven business value, not buzzword marketing.
+                    </div>
+                </div>
+                
+                <div class="confidence-footer">
+                    <div class="footer-title">🎯 Intelligence Summary</div>
+                    <div class="footer-message">
+                        When prospects mention Workday's "AI Agents," you can acknowledge them confidently and keep the conversation focused on business outcomes.
+                    </div>
+                    <div class="footer-cta">
+                        You're not missing anything - you're already delivering the value. Now stay consultative and focus on what matters most to their business.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Success Page -->
+    <div id="success" class="level-container">
+        <div class="container" style="display: flex; flex-direction: column; min-height: 100vh; box-sizing: border-box;">
+            <div class="success-header">
+                <div class="badge victory">🏆 MISSION ACCOMPLISHED</div>
+                <h1 style="font-family: 'Orbitron', monospace; font-size: 4rem; font-weight: 900; color: #ffd700; margin-bottom: 15px; letter-spacing: 3px; text-transform: uppercase; animation: victoryGlow 4s ease-in-out infinite; line-height: 1.1; text-align: center;">Success!</h1>
+                <p style="font-size: 1.6rem; color: #00ffff; margin-bottom: 30px; font-weight: 600; letter-spacing: 1px; text-align: center;">AI Power User Status: UNLOCKED</p>
+            </div>
+            
+            <div style="flex: 1; display: flex; flex-direction: column; align-items: center; padding: 20px; gap: 40px;">
+                <div class="achievements-container">
+                    <div class="achievements-title">🎯 Skills Mastered</div>
+                    
+                    <div class="skills-mastered">
+                        <div class="skill-achievement">
+                            <span class="achievement-icon">🎯</span>
+                            <div style="color: #00ffff; margin-bottom: 10px; font-weight: 700; font-family: 'Orbitron', monospace; font-size: 1.3rem;">TCREI Framework Mastery</div>
+                            <div style="color: #ffffff; font-size: 1rem; line-height: 1.4; margin-bottom: 15px; flex: 1;">You've learned to craft perfect prompts using Task, Context, References, Evaluate, and Iterate - transforming basic requests into powerful AI instructions.</div>
+                            <div style="background: linear-gradient(45deg, #ffd700, #ff6b35); color: #000000; padding: 8px 16px; border-radius: 20px; font-weight: 700; font-size: 0.9rem; display: inline-block;">+2500 XP</div>
+                        </div>
+                        
+                        <div class="skill-achievement">
+                            <span class="achievement-icon">⚔️</span>
+                            <div style="color: #00ffff; margin-bottom: 10px; font-weight: 700; font-family: 'Orbitron', monospace; font-size: 1.3rem;">Objection Handling Combat</div>
+                            <div style="color: #ffffff; font-size: 1rem; line-height: 1.4; margin-bottom: 15px; flex: 1;">You can now deploy AI-powered roleplay training to practice handling any objection scenario with realistic feedback and scoring.</div>
+                            <div style="background: linear-gradient(45deg, #ffd700, #ff6b35); color: #000000; padding: 8px 16px; border-radius: 20px; font-weight: 700; font-size: 0.9rem; display: inline-block;">+3000 XP</div>
+                        </div>
+                        
+                        <div class="skill-achievement">
+                            <span class="achievement-icon">🛡️</span>
+                            <div style="color: #00ffff; margin-bottom: 10px; font-weight: 700; font-family: 'Orbitron', monospace; font-size: 1.3rem;">Competitive Intelligence</div>
+                            <div style="color: #ffffff; font-size: 1rem; line-height: 1.4; margin-bottom: 15px; flex: 1;">You can confidently decode competitor "AI agents" and focus conversations on business outcomes rather than buzzwords.</div>
+                            <div style="background: linear-gradient(45deg, #ffd700, #ff6b35); color: #000000; padding: 8px 16px; border-radius: 20px; font-weight: 700; font-size: 0.9rem; display: inline-block;">+1500 XP</div>
+                        </div>
+                    </div>
+                    
+                    <div class="total-progress">
+                        <div class="progress-title">Total Experience Gained</div>
+                        <div class="total-xp">7,000 XP</div>
+                        <div class="progress-label">Congratulations! You've achieved AI Power User status!</div>
+                        <button class="level-complete" onclick="celebrate()">🎮 LEVEL COMPLETE</button>
+                    </div>
+                </div>
+                
+                <div class="next-steps">
+                    <div class="next-steps-title">🚀 Ready for Real Combat</div>
+                    <div class="next-steps-text">
+                        You now have the skills to leverage AI as a strategic advantage in every customer interaction. From crafting perfect follow-up emails to handling tough objections, you're equipped to win.
+                    </div>
+                    <div class="challenge-accepted">
+                        The real challenge begins now. Go show prospects what a true AI power user can do.
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 20px; justify-content: center; margin-top: 30px; padding: 20px; flex-wrap: wrap;">
+                    <button class="btn primary" onclick="startOver()" style="font-size: 1.1rem; padding: 18px 35px;">🔄 PLAY AGAIN</button>
+                    <button class="btn secondary" onclick="shareSuccess()">📤 SHARE ACHIEVEMENT</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Navigation -->
+    <div class="nav-container" id="navContainer">
+        <button class="nav-button" onclick="goBack()" id="backBtn" style="display: none;">← BACK</button>
+        <button class="nav-button" onclick="goForward()" id="forwardBtn" style="display: none;">CONTINUE →</button>
+    </div>
+
+    <script>
+        // Global variables
+        let currentLevel = 'level0';
+        let gameCompleted = false;
+        let guessedLetters = [];
+        let revealedLetters = new Set();
+        const totalLetters = new Set();
+        let currentSlide = 0;
+        const totalSlides = 3;
+        const scenarioTitles = [
+            'Discovery Question Design',
+            'Demo Preparation',
+            'Competitive Objection Handling'
+        ];
+        
+        // ENHANCED: Trigger progress bar animations when cover page loads
+        function triggerProgressAnimations() {
+            const progressBars = document.querySelectorAll('.progress-bar');
+            progressBars.forEach((bar, index) => {
+                // Remove and re-add class to restart animation
+                bar.classList.remove('progress-bar-92', 'progress-bar-78', 'progress-bar-85');
+                
+                // Use setTimeout to ensure class removal is processed
+                setTimeout(() => {
+                    if (index === 0) bar.classList.add('progress-bar-92');
+                    if (index === 1) bar.classList.add('progress-bar-78');
+                    if (index === 2) bar.classList.add('progress-bar-85');
+                }, 100);
+            });
+        }
+        
+        // Navigation and level management
+        function showLevel(levelId) {
+            // Hide all levels
+            document.querySelectorAll('.level-container').forEach(level => {
+                level.classList.remove('active');
+            });
+            
+            // Show current level
+            document.getElementById(levelId).classList.add('active');
+            currentLevel = levelId;
+            
+            // ENHANCED: Auto-scroll to top when changing levels
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Update grid background based on level
+            updateGridBackground(levelId);
+            
+            // Update navigation
+            updateNavigation();
+            
+            // Initialize level-specific functionality
+            initializeLevel(levelId);
+            
+            // ENHANCED: Trigger progress animations when showing cover page
+            if (levelId === 'level0') {
+                setTimeout(triggerProgressAnimations, 300);
+            }
+        }
+        
+        function updateGridBackground(levelId) {
+            const gridBg = document.getElementById('gridBg');
+            gridBg.className = 'grid-bg';
+            
+            switch(levelId) {
+                case 'level2':
+                    gridBg.classList.add('combat');
+                    break;
+                case 'secret':
+                    gridBg.classList.add('secret');
+                    break;
+                case 'level3a':
+                    gridBg.classList.add('education');
+                    break;
+                case 'level3b':
+                    gridBg.classList.add('intelligence');
+                    break;
+                case 'success':
+                    gridBg.classList.add('victory');
+                    break;
+                default:
+                    // Default grid styling
+                    break;
+            }
+        }
+        
+        function updateNavigation() {
+            const backBtn = document.getElementById('backBtn');
+            const forwardBtn = document.getElementById('forwardBtn');
+            const navContainer = document.getElementById('navContainer');
+            
+            // Hide navigation on cover and success pages
+            if (currentLevel === 'level0' || currentLevel === 'success') {
+                navContainer.style.display = 'none';
+                return;
+            }
+            
+            navContainer.style.display = 'flex';
+            
+            // Show/hide back button
+            if (currentLevel !== 'level0') {
+                backBtn.style.display = 'block';
+            } else {
+                backBtn.style.display = 'none';
+            }
+            
+            // Show/hide forward button based on level progression
+            const levelOrder = ['level0', 'level1', 'level1a', 'level1b', 'secret', 'level2', 'level3a', 'level3b', 'success'];
+            const currentIndex = levelOrder.indexOf(currentLevel);
+            
+            if (currentIndex < levelOrder.length - 1) {
+                forwardBtn.style.display = 'block';
+                if (currentLevel === 'level1b') {
+                    forwardBtn.textContent = 'SECRET LEVEL →';
+                } else if (currentLevel === 'secret') {
+                    forwardBtn.textContent = 'OBJECTION HANDLING →';
+                } else if (currentLevel === 'level2') {
+                    forwardBtn.textContent = 'AI AGENT FUNDAMENTALS →';
+                } else if (currentLevel === 'level3a') {
+                    forwardBtn.textContent = 'DECODE COMPETITION →';
+                } else if (currentLevel === 'level3b') {
+                    forwardBtn.textContent = 'MISSION COMPLETE →';
+                } else {
+                    forwardBtn.textContent = 'CONTINUE →';
+                }
+            } else {
+                forwardBtn.style.display = 'none';
+            }
+        }
+        
+        function goBack() {
+            const levelOrder = ['level0', 'level1', 'level1a', 'level1b', 'secret', 'level2', 'level3a', 'level3b', 'success'];
+            const currentIndex = levelOrder.indexOf(currentLevel);
+            
+            if (currentIndex > 0) {
+                showLevel(levelOrder[currentIndex - 1]);
+            }
+        }
+        
+        function goForward() {
+            const levelOrder = ['level0', 'level1', 'level1a', 'level1b', 'secret', 'level2', 'level3a', 'level3b', 'success'];
+            const currentIndex = levelOrder.indexOf(currentLevel);
+            
+            if (currentIndex < levelOrder.length - 1) {
+                showLevel(levelOrder[currentIndex + 1]);
+            }
+        }
+        
+        function initializeLevel(levelId) {
+            switch(levelId) {
+                case 'level1':
+                    initializeWordGame();
+                    break;
+                case 'level1b':
+                    initializeExamplesSlider();
+                    break;
+                default:
+                    break;
+            }
+        }
+        
+        // Cover page functions
+        function startGame() {
+            showLevel('level1');
+        }
+        
+        // Level 1 word game functions
+        function initializeWordGame() {
+            const hiddenBoxes = document.querySelectorAll('[data-letter]');
+            totalLetters.clear();
+            revealedLetters.clear();
+            guessedLetters = [];
+            gameCompleted = false;
+            
+            hiddenBoxes.forEach(box => {
+                totalLetters.add(box.getAttribute('data-letter').toLowerCase());
+                box.textContent = '_';
+                box.classList.remove('revealed');
+            });
+            
+            // Auto-focus input
+            const letterInput = document.getElementById('letterInput');
+            if (letterInput) {
+                letterInput.focus();
+                letterInput.value = '';
+            }
+            
+            // Hide completion message
+            const completionMessage = document.getElementById('completionMessage');
+            if (completionMessage) {
+                completionMessage.style.display = 'none';
+            }
+        }
+        
+        function guessLetter() {
+            const input = document.getElementById('letterInput');
+            const letter = input.value.toUpperCase().trim();
+            
+            if (!letter) {
+                input.focus();
+                return;
+            }
+            
+            if (!/^[A-Z]$/.test(letter)) {
+                alert('Please enter a single letter!');
+                input.value = '';
+                input.focus();
+                return;
+            }
+            
+            if (guessedLetters.includes(letter)) {
+                alert('You already guessed that letter!');
+                input.value = '';
+                input.focus();
+                return;
+            }
+            
+            // Add to guessed letters
+            guessedLetters.push(letter);
+            
+            // Check if letter exists in phrase
+            const letterBoxes = document.querySelectorAll(`[data-letter="${letter}"]`);
+            
+            if (letterBoxes.length > 0) {
+                // Letter found! Reveal all instances
+                letterBoxes.forEach(box => {
+                    revealLetterBox(box);
+                });
+                revealedLetters.add(letter.toLowerCase());
+                
+                // Check if puzzle is complete
+                checkCompletion();
+            } else {
+                // Letter not found - show feedback
+                input.style.borderColor = '#ff0000';
+                setTimeout(() => {
+                    input.style.borderColor = '#00ffff';
+                }, 1000);
+            }
+            
+            // Clear input and focus for next guess
+            input.value = '';
+            input.focus();
+        }
+        
+        function revealAll() {
+            // Reveal all hidden letters at once
+            const hiddenBoxes = document.querySelectorAll('[data-letter]');
+            hiddenBoxes.forEach(box => {
+                if (!box.classList.contains('revealed')) {
+                    revealLetterBox(box);
+                    const letter = box.getAttribute('data-letter').toLowerCase();
+                    revealedLetters.add(letter);
+                    if (!guessedLetters.includes(letter.toUpperCase())) {
+                        guessedLetters.push(letter.toUpperCase());
+                    }
+                }
+            });
+            
+            checkCompletion();
+        }
+        
+        function revealLetterBox(element) {
+            const letter = element.getAttribute('data-letter');
+            element.textContent = letter;
+            element.classList.add('revealed');
+            createSparkles(element);
+        }
+        
+        function checkCompletion() {
+            // Check if all letters have been revealed
+            const allRevealed = Array.from(totalLetters).every(letter => 
+                revealedLetters.has(letter)
+            );
+            
+            if (allRevealed && !gameCompleted) {
+                gameCompleted = true;
+                setTimeout(() => {
+                    document.getElementById('completionMessage').style.display = 'block';
+                }, 500);
+            }
+        }
+        
+        function nextLevel() {
+            showLevel('level1a');
+        }
+        
+        function createSparkles(element) {
+            for (let i = 0; i < 5; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.style.position = 'absolute';
+                sparkle.style.width = '4px';
+                sparkle.style.height = '4px';
+                sparkle.style.background = '#00ffff';
+                sparkle.style.borderRadius = '50%';
+                sparkle.style.pointerEvents = 'none';
+                sparkle.style.zIndex = '1000';
+                
+                const rect = element.getBoundingClientRect();
+                sparkle.style.left = (rect.left + Math.random() * rect.width) + 'px';
+                sparkle.style.top = (rect.top + Math.random() * rect.height) + 'px';
+                
+                document.body.appendChild(sparkle);
+                
+                // Animate sparkle
+                sparkle.animate([
+                    { transform: 'translateY(0px) scale(1)', opacity: 1 },
+                    { transform: 'translateY(-50px) scale(0.5)', opacity: 0 }
+                ], {
+                    duration: 1000,
+                    easing: 'ease-out'
+                }).onfinish = () => sparkle.remove();
+            }
+        }
+        
+        // Framework page functions
+        function continueToExamples() {
+            showLevel('level1b');
+        }
+        
+        // Examples slider functions
+        function initializeExamplesSlider() {
+            currentSlide = 0;
+            showSlide(0);
+        }
+        
+        function showSlide(index) {
+            const viewport = document.getElementById('viewport');
+            const translateX = -index * 100;
+            viewport.style.transform = `translateX(${translateX}%)`;
+            
+            // Update indicator
+            document.getElementById('currentExample').textContent = index + 1;
+            
+            // Update scenario title
+            document.getElementById('scenarioTitle').textContent = scenarioTitles[index];
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = index === 0;
+            document.getElementById('nextBtn').disabled = index === totalSlides - 1;
+            
+            currentSlide = index;
+        }
+        
+        function nextExample() {
+            if (currentSlide < totalSlides - 1) {
+                showSlide(currentSlide + 1);
+            }
+        }
+        
+        function previousExample() {
+            if (currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            }
+        }
+        
+        // Meta prompting functions
+        function copyToClipboard() {
+            const metaPromptText = document.getElementById('metaPromptText').innerText;
+            
+            // Clean up the text (remove HTML formatting)
+            const cleanText = metaPromptText.replace(/\[SITUATION\]/g, '[SITUATION]');
+            
+            navigator.clipboard.writeText(cleanText).then(function() {
+                const button = document.querySelector('.btn.secret');
+                const originalText = button.innerHTML;
+                
+                button.innerHTML = '✅ COPIED TO CLIPBOARD!';
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                }, 2000);
+                
+                // Add some celebration effects
+                createCelebrationParticles();
+            }).catch(function(err) {
+                console.error('Could not copy text: ', err);
+                // Fallback for older browsers
+                fallbackCopyTextToClipboard(cleanText);
+            });
+        }
+        
+        function fallbackCopyTextToClipboard(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                const button = document.querySelector('.btn.secret');
+                button.innerHTML = '✅ COPIED TO CLIPBOARD!';
+                setTimeout(() => {
+                    button.innerHTML = '📋 COPY TEMPLATE';
+                }, 2000);
+            } catch (err) {
+                console.error('Fallback: Could not copy text: ', err);
+            }
+            
+            document.body.removeChild(textArea);
+        }
+        
+        function createCelebrationParticles() {
+            for (let i = 0; i < 8; i++) {
+                const particle = document.createElement('div');
+                particle.style.position = 'absolute';
+                particle.style.width = '4px';
+                particle.style.height = '4px';
+                particle.style.background = '#ffd700';
+                particle.style.borderRadius = '50%';
+                particle.style.pointerEvents = 'none';
+                particle.style.zIndex = '1000';
+                
+                const container = document.querySelector('.meta-prompt-container');
+                const rect = container.getBoundingClientRect();
+                particle.style.left = (rect.left + rect.width/2 + (Math.random() - 0.5) * 200) + 'px';
+                particle.style.top = (rect.top + rect.height/2 + (Math.random() - 0.5) * 200) + 'px';
+                
+                document.body.appendChild(particle);
+                
+                particle.animate([
+                    { transform: 'translateY(0px) scale(1)', opacity: 1 },
+                    { transform: 'translateY(-80px) scale(0.5)', opacity: 0 }
+                ], {
+                    duration: 1500,
+                    easing: 'ease-out'
+                }).onfinish = () => particle.remove();
+            }
+        }
+        
+        // Combat training functions
+        function deployTraining() {
+            const combatPromptText = document.getElementById('combatPromptText').innerText;
+            
+            navigator.clipboard.writeText(combatPromptText).then(function() {
+                const button = document.querySelector('.btn.combat');
+                const originalText = button.innerHTML;
+                
+                button.innerHTML = '✅ SIMULATION DEPLOYED TO CLIPBOARD!';
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                }, 3000);
+                
+                // Add combat celebration effects
+                createCombatEffects();
+            }).catch(function(err) {
+                console.error('Could not copy text: ', err);
+                // Fallback for older browsers
+                fallbackCopyTextToClipboard(combatPromptText);
+            });
+        }
+        
+        function toggleScenarios() {
+            const content = document.getElementById('scenarioContent');
+            const arrow = document.getElementById('scenarioArrow');
+            
+            content.classList.toggle('expanded');
+            arrow.classList.toggle('rotated');
+        }
+        
+        function copyScenario(scenarioId, button) {
+            const scenarioText = document.getElementById(scenarioId).innerText;
+            
+            navigator.clipboard.writeText(scenarioText).then(function() {
+                const originalText = button.innerHTML;
+                
+                button.innerHTML = '✅ Copied!';
+                button.style.background = 'linear-gradient(45deg, #00ff00, #00ffff)';
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.style.background = 'linear-gradient(45deg, #ffd700, #ff6b35)';
+                }, 2000);
+                
+                // Add success particle effect
+                createCopyEffects(button);
+            }).catch(function(err) {
+                console.error('Could not copy scenario: ', err);
+                // Fallback for older browsers
+                fallbackCopyScenario(scenarioText, button);
+            });
+        }
+        
+        function fallbackCopyScenario(text, button) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                button.innerHTML = '✅ Copied!';
+                button.style.background = 'linear-gradient(45deg, #00ff00, #00ffff)';
+                setTimeout(() => {
+                    button.innerHTML = '📋 Copy';
+                    button.style.background = 'linear-gradient(45deg, #ffd700, #ff6b35)';
+                }, 2000);
+                createCopyEffects(button);
+            } catch (err) {
+                console.error('Fallback: Could not copy scenario: ', err);
+            }
+            
+            document.body.removeChild(textArea);
+        }
+        
+        function createCopyEffects(button) {
+            for (let i = 0; i < 6; i++) {
+                const particle = document.createElement('div');
+                particle.style.position = 'absolute';
+                particle.style.width = '3px';
+                particle.style.height = '3px';
+                particle.style.background = '#ffd700';
+                particle.style.borderRadius = '50%';
+                particle.style.pointerEvents = 'none';
+                particle.style.zIndex = '1000';
+                
+                const rect = button.getBoundingClientRect();
+                particle.style.left = (rect.left + rect.width/2 + (Math.random() - 0.5) * 60) + 'px';
+                particle.style.top = (rect.top + rect.height/2 + (Math.random() - 0.5) * 40) + 'px';
+                
+                document.body.appendChild(particle);
+                
+                particle.animate([
+                    { transform: 'translateY(0px) scale(1)', opacity: 1 },
+                    { transform: 'translateY(-40px) scale(0.3)', opacity: 0 }
+                ], {
+                    duration: 1200,
+                    easing: 'ease-out'
+                }).onfinish = () => particle.remove();
+            }
+        }
+        
+        function createCombatEffects() {
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                particle.style.position = 'absolute';
+                particle.style.width = '4px';
+                particle.style.height = '4px';
+                particle.style.background = Math.random() > 0.5 ? '#ff0000' : '#ff6b35';
+                particle.style.borderRadius = '50%';
+                particle.style.pointerEvents = 'none';
+                particle.style.zIndex = '1000';
+                
+                const arena = document.querySelector('.combat-arena');
+                const rect = arena.getBoundingClientRect();
+                particle.style.left = (rect.left + rect.width/2 + (Math.random() - 0.5) * 300) + 'px';
+                particle.style.top = (rect.top + rect.height/2 + (Math.random() - 0.5) * 200) + 'px';
+                
+                document.body.appendChild(particle);
+                
+                particle.animate([
+                    { transform: 'translateY(0px) scale(1)', opacity: 1 },
+                    { transform: 'translateY(-150px) scale(0.3)', opacity: 0 }
+                ], {
+                    duration: 2000,
+                    easing: 'ease-out'
+                }).onfinish = () => particle.remove();
+            }
+        }
+        
+        // Education functions
+        function continueToDecoding() {
+            // Create understanding celebration effects
+            createUnderstandingEffects();
+            
+            setTimeout(() => {
+                showLevel('level3b');
+            }, 1000);
+        }
+        
+        function createUnderstandingEffects() {
+            for (let i = 0; i < 12; i++) {
+                const particle = document.createElement('div');
+                particle.style.position = 'absolute';
+                particle.style.width = '4px';
+                particle.style.height = '4px';
+                particle.style.background = Math.random() > 0.5 ? '#0096ff' : '#00ffff';
+                particle.style.borderRadius = '50%';
+                particle.style.pointerEvents = 'none';
+                particle.style.zIndex = '1000';
+                
+                const center = document.querySelector('.knowledge-center');
+                const rect = center.getBoundingClientRect();
+                particle.style.left = (rect.left + rect.width/2 + (Math.random() - 0.5) * 300) + 'px';
+                particle.style.top = (rect.top + rect.height/2 + (Math.random() - 0.5) * 200) + 'px';
+                
+                document.body.appendChild(particle);
+                
+                particle.animate([
+                    { transform: 'translateY(0px) scale(1)', opacity: 1 },
+                    { transform: 'translateY(-100px) scale(0.5)', opacity: 0 }
+                ], {
+                    duration: 1800,
+                    easing: 'ease-out'
+                }).onfinish = () => particle.remove();
+            }
+        }
+        
+        // Intelligence decoder functions
+        function decodeAgent(agentType) {
+            const card = document.getElementById(agentType + '-card');
+            const decoded = document.getElementById(agentType + '-decoded');
+            const button = card.querySelector('.decode-button');
+            
+            // Mark as decoded
+            card.classList.add('decoded');
+            button.classList.add('decoded');
+            button.innerHTML = '✅ DECODED';
+            
+            // Show decoded content
+            decoded.classList.add('visible');
+            
+            // Create decode effects
+            createDecodeEffects(card);
+        }
+        
+        function createDecodeEffects(element) {
+            for (let i = 0; i < 8; i++) {
+                const particle = document.createElement('div');
+                particle.style.position = 'absolute';
+                particle.style.width = '3px';
+                particle.style.height = '3px';
+                particle.style.background = Math.random() > 0.5 ? '#00ff00' : '#00ffff';
+                particle.style.borderRadius = '50%';
+                particle.style.pointerEvents = 'none';
+                particle.style.zIndex = '1000';
+                
+                const rect = element.getBoundingClientRect();
+                particle.style.left = (rect.left + rect.width/2 + (Math.random() - 0.5) * 200) + 'px';
+                particle.style.top = (rect.top + rect.height/2 + (Math.random() - 0.5) * 100) + 'px';
+                
+                document.body.appendChild(particle);
+                
+                particle.animate([
+                    { transform: 'translateY(0px) scale(1)', opacity: 1 },
+                    { transform: 'translateY(-80px) scale(0.3)', opacity: 0 }
+                ], {
+                    duration: 1500,
+                    easing: 'ease-out'
+                }).onfinish = () => particle.remove();
+            }
+        }
+        
+        // Success page functions
+        function celebrate() {
+            createMassiveVictoryEffects();
+            const button = document.querySelector('.level-complete');
+            button.innerHTML = '🎉 LEGENDARY!';
+            setTimeout(() => {
+                button.innerHTML = '🎮 LEVEL COMPLETE';
+            }, 2000);
+        }
+        
+        function createMassiveVictoryEffects() {
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.style.position = 'absolute';
+                particle.style.width = '8px';
+                particle.style.height = '8px';
+                particle.style.background = ['#ffd700', '#00ffff', '#ff6b35', '#00ff00'][Math.floor(Math.random() * 4)];
+                particle.style.borderRadius = '50%';
+                particle.style.pointerEvents = 'none';
+                particle.style.zIndex = '1000';
+                
+                const centerX = window.innerWidth / 2;
+                const centerY = window.innerHeight / 2;
+                particle.style.left = (centerX + (Math.random() - 0.5) * 600) + 'px';
+                particle.style.top = (centerY + (Math.random() - 0.5) * 400) + 'px';
+                
+                document.body.appendChild(particle);
+                
+                particle.animate([
+                    { transform: 'translateY(0px) scale(1) rotate(0deg)', opacity: 1 },
+                    { transform: 'translateY(-200px) scale(0.2) rotate(360deg)', opacity: 0 }
+                ], {
+                    duration: 4000,
+                    easing: 'ease-out'
+                }).onfinish = () => particle.remove();
+            }
+        }
+        
+        function startOver() {
+            showLevel('level0');
+        }
+        
+        function shareSuccess() {
+            // Copy achievement text to clipboard
+            const achievementText = "🏆 Just completed The Advisory's AI Playbook! Mastered TCREI Framework, Objection Handling Combat, and Competitive Intelligence. 7,000 XP earned! Ready to leverage AI as a strategic advantage. #AIpoweruser #DayforceTraining";
+            
+            navigator.clipboard.writeText(achievementText).then(function() {
+                alert('🎉 Achievement text copied to clipboard! Share your success!');
+            }).catch(function(err) {
+                alert('Achievement unlocked! You can now leverage AI as a strategic advantage in every customer interaction.');
+            });
+        }
+        
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize the application
+            showLevel('level0');
+            
+            // Trigger progress animations after a short delay
+            setTimeout(triggerProgressAnimations, 500);
+            
+            // Add keyboard support for word game
+            document.addEventListener('keydown', function(e) {
+                if (currentLevel === 'level1' && e.key === 'Enter') {
+                    guessLetter();
+                }
+                
+                // Keyboard navigation for examples
+                if (currentLevel === 'level1b') {
+                    if (e.key === 'ArrowLeft') {
+                        previousExample();
+                    } else if (e.key === 'ArrowRight') {
+                        nextExample();
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
